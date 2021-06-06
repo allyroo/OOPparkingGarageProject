@@ -8,15 +8,34 @@ class parkingGarage:
     # Method 1 - take ticket
     def takeTicket(self):
         if len(self.tickets) == 0:
-            print("Sorry, the parking garage is at full capacity!")
+            print("Were full get lost!")
         else:
             open_stall = self.parkingSpace.pop(0)
-            print(f"Please proceed to park in stall {open_stall}. Don't forget to lock your doors!")
+            print(f"Go to your spot now {open_stall}. Don't forget to lock your doors! We are not liable for losses damages.")
 
             self.parkingSpaces.append(open_stall)
             self.currentTicket[open_stall] = "unpaid"
 
-    def payForParking(self):
+    def parkingSpaces(self):
+        
+        parking_space = int(input("What number space are you in? "))
+        if len(self.parkingSpaces) == 0:
+            print("Park Your ****ing Car man!")
+            return
+        
+        if parking_space not in self.parkingSpaces:
+            print("Gimme your space number foo")
+            return
+    
+        if self.currentTicket[parking_space] == "paid":
+            print('You paid. What are you a wise guy?')
+        else:
+            print('You got to pay to play.')
+            pay = input("Please type 'Y' to pay ")
+                
+            if pay.lower() == "y":
+                self.currentTicket[parking_space] = "paid"
+                print(f'Guy your ticket has been {self.currentTicket[parking_space]} Leave in 15 minutes.')
 
     
     def leaveGarage(self):
@@ -39,6 +58,7 @@ run()
             frustration_temple.leaveGarage()
         else:
             print("Not an option, champ. Try again.")        
+
 
 
 
