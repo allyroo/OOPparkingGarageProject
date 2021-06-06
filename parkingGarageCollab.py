@@ -29,9 +29,11 @@ class parkingGarage:
         open_stall = int(input("What number space are you in? "))
         if len(self.parkingSpaces) == 0:
             print("Uhhh... try parking first.")
+            return
         
         if open_stall not in self.parkingSpaces:
             print("Gimme your space number foo.")
+            return
     
         if self.currentTicket[open_stall] == "paid":
             print('You paid already. What are you a wise guy?')
@@ -41,7 +43,7 @@ class parkingGarage:
                 
             if pay.lower() == "y":
                 self.currentTicket[open_stall] = "paid"
-                print(f'Guy, your ticket has been {self.currentTicket[parking_space]}. Leave in 15 minutes or that ride is OURS.')
+                print(f'Guy, your ticket has been {self.currentTicket[open_stall]}. Leave in 15 minutes or that ride is OURS.')
 
     
     
@@ -53,10 +55,10 @@ class parkingGarage:
             print("You need to park first!!")
             return
                      
-        if paid_space not in self.parkingSpaces:
+        elif paid_space not in self.parkingSpaces:
                     print("What's your space number? We don't got all day...")
                    
-        if self.currentTicket[paid_space] == 'paid':
+        elif self.currentTicket[paid_space] == 'paid':
             self.parkingSpaces.remove(paid_space)
             self.tickets.append(paid_space)
             self.tickets.sort()
@@ -68,7 +70,7 @@ class parkingGarage:
                 print("You trying to live here?\n")
                     
             elif command.lower() == "yes":
-                self.pay()
+                self.payforParking()
 
 # ([tickets], [parking spaces], {current tickets: {parking ticket number : paid/unpaid}})
 parking_stalls = [1,2,3,4,5,6,7,8,9,10]
@@ -85,7 +87,7 @@ def run():
         elif do.lower() == 'park':
             kourteous.takeTicket()
         elif do.lower() == 'pay':
-            kourteous.payforParking
+            kourteous.payforParking()
         elif do.lower() == 'leave':
             kourteous.leaveGarage()
         else:
