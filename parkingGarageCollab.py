@@ -5,91 +5,93 @@ class parkingGarage:
         self.parkingSpaces = parkingSpaces #list
         self.currentTicket = currentTicket #dictionary {space# : paid/unpaid}
 
-    # Method 1 - take ticket
+    # Method 1 
     def takeTicket(self):
         if len(self.tickets) == 0:
-            print("Were full get lost!")
+            print("We're full get lost!")
         else:
-            open_stall = self.parkingSpace.pop(0)
-            print(f"Go to your spot now {open_stall}. Don't forget to lock your doors! We are not liable for losses damages.")
+            open_stall = self.tickets.pop(0)
+            
+
+            print(f"Go to your spot now: Stall #{open_stall}. Lock your doors! We are not liable for losses/damages.")
+            if self.currentTicket == {}:
+                print("You've got the VIP spot.")
+            else:
+                print(self.currentTicket)
+            
 
             self.parkingSpaces.append(open_stall)
             self.currentTicket[open_stall] = "unpaid"
 
-    def parkingSpaces(self):
+    # Method 2 
+    def payforParking(self):
         
-        parking_space = int(input("What number space are you in? "))
+        open_stall = int(input("What number space are you in? "))
         if len(self.parkingSpaces) == 0:
-            print("Park Your ****ing Car man!")
-            return
+            print("Uhhh... try parking first.")
         
-        if parking_space not in self.parkingSpaces:
-            print("Gimme your space number foo")
-            return
+        if open_stall not in self.parkingSpaces:
+            print("Gimme your space number foo.")
     
-        if self.currentTicket[parking_space] == "paid":
-            print('You paid. What are you a wise guy?')
+        if self.currentTicket[open_stall] == "paid":
+            print('You paid already. What are you a wise guy?')
         else:
-            print('You got to pay to play.')
+            print("You've got to pay to play.")
             pay = input("Please type 'Y' to pay ")
                 
             if pay.lower() == "y":
-                self.currentTicket[parking_space] = "paid"
-                print(f'Guy your ticket has been {self.currentTicket[parking_space]} Leave in 15 minutes.')
+                self.currentTicket[open_stall] = "paid"
+                print(f'Guy, your ticket has been {self.currentTicket[parking_space]}. Leave in 15 minutes or that ride is OURS.')
 
     
     
-
-    def leave(self):
+    # Method 3
+    def leaveGarage(self):
         
-        paid_space = int(input("Please enter the parking space number of your ticket? "))
+        paid_space = int(input("Enter the parking space number of your ticket: "))
         if len(self.parkingSpaces) == 0:
-            print("Please go ahead and park first!")
+            print("You need to park first!!")
             return
-            
-            
-                 
+                     
         if paid_space not in self.parkingSpaces:
-                    print("Please input a valid space number: ")
-                
-            
-             
+                    print("What's your space number? We don't got all day...")
+                   
         if self.currentTicket[paid_space] == 'paid':
             self.parkingSpaces.remove(paid_space)
             self.tickets.append(paid_space)
             self.tickets.sort()
             del self.currentTicket[paid_space]
-            print("Thank you safe travels :) \n")
+            print("Thank you, safe travels :) Now GET OUTTA HERE.\n")
         else:
-            command = input("Your parking has not yet been paid for, would you like to pay y/ n?: ")
-            if command.lower() == "n":
-                print("Goodbye \n")
+            command = input("I see you tryna dip out of here without paying. Pay up: yes/no ")
+            if command.lower() == "no":
+                print("You trying to live here?\n")
                     
-            elif command.lower() == "y":
+            elif command.lower() == "yes":
                 self.pay()
 
 # ([tickets], [parking spaces], {current tickets: {parking ticket number : paid/unpaid}})
-frustration_temple = parkingGarage([1,2,3,4,5,6,7,8,9,10],[],{})
+parking_stalls = [1,2,3,4,5,6,7,8,9,10]
+kourteous = parkingGarage(parking_stalls,[],{})
+
+
+def run():
+    
+    while True:
+        do = input("Welcome to the one and only KOURTEOUS Parking Garage. What do you want?! Park/Pay/Leave/Quit ")
+        if do.lower() == 'quit':
+            print("DEUCES!")
+            break
+        elif do.lower() == 'park':
+            kourteous.takeTicket()
+        elif do.lower() == 'pay':
+            kourteous.payforParking
+        elif do.lower() == 'leave':
+            kourteous.leaveGarage()
+        else:
+            print("???")        
 
 
 run()
-    while True:
-        do = input("Welcome to the Frustration Temple Parking Garage! What do you want?! Park/Pay/Leave/Quit ")
-        if do.lower() == 'quit':
-            print("DEUCES")
-            break
-        elif do.lower() == 'park':
-            frustration_temple.takeTicket()
-        elif do.lower() == 'pay':
-            frustration_temple.payForParking()
-        elif do.lower() == 'leave':
-            frustration_temple.leaveGarage()
-        else:
-            print("Not an option, champ. Try again.")        
 
 
-
-
-
-
-    
