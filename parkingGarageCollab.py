@@ -38,7 +38,35 @@ class parkingGarage:
                 print(f'Guy your ticket has been {self.currentTicket[parking_space]} Leave in 15 minutes.')
 
     
-    def leaveGarage(self):
+    
+
+    def leave(self):
+        
+        paid_space = int(input("Please enter the parking space number of your ticket? "))
+        if len(self.parkingSpaces) == 0:
+            print("Please go ahead and park first!")
+            return
+            
+            
+                 
+        if paid_space not in self.parkingSpaces:
+                    print("Please input a valid space number: ")
+                
+            
+             
+        if self.currentTicket[paid_space] == 'paid':
+            self.parkingSpaces.remove(paid_space)
+            self.tickets.append(paid_space)
+            self.tickets.sort()
+            del self.currentTicket[paid_space]
+            print("Thank you safe travels :) \n")
+        else:
+            command = input("Your parking has not yet been paid for, would you like to pay y/ n?: ")
+            if command.lower() == "n":
+                print("Goodbye \n")
+                    
+            elif command.lower() == "y":
+                self.pay()
 
 # ([tickets], [parking spaces], {current tickets: {parking ticket number : paid/unpaid}})
 frustration_temple = parkingGarage([1,2,3,4,5,6,7,8,9,10],[],{})
